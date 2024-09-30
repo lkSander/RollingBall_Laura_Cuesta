@@ -5,7 +5,7 @@ using UnityEngine;
 public class Personaje : MonoBehaviour
 {
 
-    [SerializeField] private float velocity;
+    [SerializeField] public float velocity;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -17,30 +17,43 @@ public class Personaje : MonoBehaviour
     void Update()
     {
         Movimiento();
+        
     }
 
     void Movimiento()
 
     {
-        float z = 0;
-        float x = 0;
 
-        if (Input.GetKeyDown(KeyCode.W))
+
+        //float z = 0;
+        //float x = 0;
+
+        if (Input.GetKey(KeyCode.W))
         {
-            z++;
+            //z++;
+            transform.position += new Vector3(0, 0, 1).normalized * velocity*Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A)&& Input.GetKey(KeyCode.W))
         {
-            x--;
+            
+            transform.position += new Vector3(-1, 0, 0).normalized * velocity*Time.deltaTime;
+           
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        //    x--;
+        if (Input.GetKey(KeyCode.S))
         {
-            z--;
+            transform.position += new Vector3(0, 0, -1).normalized * velocity * Time.deltaTime;
+            //    z--;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D)&& Input.GetKey(KeyCode.W))
         {
-            x++;
+            transform.position += new Vector3(1, 0, 0).normalized * velocity* Time.deltaTime;
+            //    x++;
         }
-        rb.velocity = new Vector3(x * velocity, 0, z * velocity);
+        //rb.velocity = new Vector3(x * velocity, 0, z * velocity);
+        
     }
+    
+
 }
+
