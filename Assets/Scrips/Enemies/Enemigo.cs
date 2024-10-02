@@ -30,29 +30,35 @@ public class Enemigo : MonoBehaviour
             transform.Translate(movimiento.normalized * velocity * Time.deltaTime);
             if (timer >= 2)
             {
-                transform.Translate(movimiento.normalized * -1 * velocity * Time.deltaTime);
+
+                transform.Translate(movimiento.normalized * 1 * velocity * Time.deltaTime);
+                transform.eulerAngles = new Vector3(0, 180, 0);
+               
                 derecha = true;
                 timer = 0;
-                transform.eulerAngles= new Vector3 (0,180,0);   
-              
+
+
             }
-        } 
+        }
 
         if (derecha == true)
         {
             transform.Translate(movimiento.normalized * -1 * velocity * Time.deltaTime);
             if (timer >= 2)
             {
-                transform.Translate(movimiento.normalized * velocity * Time.deltaTime);
+                transform.Translate(movimiento.normalized *-1* velocity * Time.deltaTime);
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                
                 derecha = false;
                 timer = 0;
-                transform.eulerAngles = new Vector3(0, 180, 0);
             }
 
         }
 
+
        
 
+        Debug.Log(timer);
 
 
     }
