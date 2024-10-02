@@ -7,6 +7,8 @@ public class Enemigo : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] float velocity;
     [SerializeField] Vector3 movimiento;
+    float timer = 0f;
+    bool derecha=false;
    
     void Start()
     {
@@ -21,8 +23,37 @@ public class Enemigo : MonoBehaviour
 
     void Movimiento()
     {
-        //transform.position += new Vector3(0, 0, 1).normalized * velocity * Time.deltaTime;
-        transform.Translate (movimiento.normalized * velocity * Time.deltaTime);
+        timer += Time.deltaTime;
+
+        if (derecha == false)
+        {
+            transform.Translate(movimiento.normalized * velocity * Time.deltaTime);
+            if (timer >= 2)
+            {
+                transform.Translate(movimiento.normalized * -1 * velocity * Time.deltaTime);
+                derecha = true;
+                timer = 0;
+                transform.eulerAngles= new Vector3 (0,180,0);   
+              
+            }
+        } 
+
+        if (derecha == true)
+        {
+            transform.Translate(movimiento.normalized * -1 * velocity * Time.deltaTime);
+            if (timer >= 2)
+            {
+                transform.Translate(movimiento.normalized * velocity * Time.deltaTime);
+                derecha = false;
+                timer = 0;
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+
+        }
+
        
+
+
+
     }
 }

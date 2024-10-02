@@ -36,7 +36,7 @@ public class Personaje : MonoBehaviour
         if (Input.GetKey(KeyCode.A)&& Input.GetKey(KeyCode.W))
         {
             
-            transform.position += new Vector3(-1, 0, 0).normalized * velocity*Time.deltaTime;
+            transform.position += new Vector3(-1, 0, 1).normalized * velocity*Time.deltaTime;
            
         }
         //    x--;
@@ -47,10 +47,11 @@ public class Personaje : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D)&& Input.GetKey(KeyCode.W))
         {
-            transform.position += new Vector3(1, 0, 0).normalized * velocity* Time.deltaTime;
+            transform.position += new Vector3(1, 0, 1).normalized * velocity* Time.deltaTime;
             //    x++;
         }
         //rb.velocity = new Vector3(x * velocity, 0, z * velocity);
+       
         
     }
     
