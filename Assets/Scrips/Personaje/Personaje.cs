@@ -23,26 +23,26 @@ public class Personaje : MonoBehaviour
     void Movimiento()
 
     {
-
+       // rb.AddForce(direccionF * fuerza, ForceMode.TipoF);
         float h= Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+        float v = Input.GetAxisRaw("Vertical");
+
+        rb.AddForce(new Vector3(h,0,v) * velocity, ForceMode.Force);
 
 
-
-
-        //float z = 0;
-        //float x = 0;
+        ////float z = 0;
+        ////float x = 0;
 
         //if (Input.GetKey(KeyCode.W))
         //{
         //    //z++;
-        //    transform.position += new Vector3(0, 0, 1).normalized * velocity*Time.deltaTime;
+        //    transform.position += new Vector3(0, 0, 1).normalized * velocity * Time.deltaTime;
         //}
-        //if (Input.GetKey(KeyCode.A)&& Input.GetKey(KeyCode.W))
+        //if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         //{
-            
-        //    transform.position += new Vector3(-1, 0, 1).normalized * velocity*Time.deltaTime;
-           
+
+        //    transform.position += new Vector3(-1, 0, 1).normalized * velocity * Time.deltaTime;
+
         //}
         ////    x--;
         //if (Input.GetKey(KeyCode.S))
@@ -50,22 +50,22 @@ public class Personaje : MonoBehaviour
         //    transform.position += new Vector3(0, 0, -1).normalized * velocity * Time.deltaTime;
         //    //    z--;
         //}
-        //if (Input.GetKey(KeyCode.D)&& Input.GetKey(KeyCode.W))
+        //if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
         //{
-        //    transform.position += new Vector3(1, 0, 1).normalized * velocity* Time.deltaTime;
+        //    transform.position += new Vector3(1, 0, 1).normalized * velocity * Time.deltaTime;
         //    //    x++;
         //}
         ////rb.velocity = new Vector3(x * velocity, 0, z * velocity);
 
-        //if(Input.GetKey(KeyCode.D))
-        //{
-        //    transform.eulerAngles= new Vector3 (0,90,0);
-        //}
+        ////if (Input.GetKey(KeyCode.D))
+        ////{
+        ////    transform.eulerAngles = new Vector3(0, 90, 0);
+        ////}
 
-       
-        
+
+
     }
-    
+
 
 }
 
