@@ -17,4 +17,7 @@ public class Coleccionable : MonoBehaviour
     {
         transform.Rotate(rotar * velocity * Time.deltaTime);
     }
+
+    
 }
+

@@ -1,33 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class Personaje : MonoBehaviour
 {
 
     [SerializeField] public float velocity;
     Rigidbody rb;
+    Animator animator;
+    private float h, v;
+    private int puntuacion = 0;
+    private Vector3 inicio;
+    private int vida;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        inicio= transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         Movimiento();
+        Animaciones();
         
+    }
+    private void FixedUpdate()
+    {
+        rb.AddForce(new Vector3(h, 0, v) * velocity, ForceMode.Force);
     }
 
     void Movimiento()
 
     {
        // rb.AddForce(direccionF * fuerza, ForceMode.TipoF);
-        float h= Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        h= Input.GetAxisRaw("Horizontal");
+       v = Input.GetAxisRaw("Vertical");
 
-        rb.AddForce(new Vector3(h,0,v) * velocity, ForceMode.Force);
+        
 
 
         ////float z = 0;
@@ -65,7 +79,43 @@ public class Personaje : MonoBehaviour
 
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Coleccionable"))
+        {
+            Destroy(other.gameObject);
+            puntuacion +=10;
 
+        }
+        if(other.CompareTag("Enemigo"))
+        {
+            vida -= 1;
+        }
+        if(other.CompareTag("Vacio"))
+        {
+            transform.position = inicio;
+        }
+        
+    }
+    void Animaciones()
+    {
+        if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.A)|| Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D) )
+        {
+            animator.SetBool("movimiento",true);
+        }
+        else
+        {
+            animator.SetBool("movimiento", false);
+        }
+        //if(v==1|| v==1)
+        //{
+        //    animator.SetBool("movimiento", true);
+        //}
+        //if(v==0)
+        //{
+        //    animator.SetBool("movimiento",false);
+        //}
+    }
 
 }
 
