@@ -14,11 +14,15 @@ public class Personaje : MonoBehaviour
    [SerializeField] TMP_Text score;
     [SerializeField] TMP_Text life;
 
+    [SerializeField] float fuerzaSalto;
 
-     float h, v;
+
+   private  float h, v, y;
     private int puntuacion = 0;
     private Vector3 inicio;
     private int vida =3 ;
+    private bool detectarSuelo = false;
+    private float maxDistance = 0.5f;
     
   
 
@@ -38,6 +42,8 @@ public class Personaje : MonoBehaviour
     {
         Movimiento();
         Animaciones();
+        detectarSuelo=DetectarSuelo(detectarSuelo);
+        Salto();
       
 
     }
@@ -131,6 +137,29 @@ public class Personaje : MonoBehaviour
             animator.SetBool("movimiento", false);
         }
     }
-   
+    void Salto()
+    {
+        if(Input.GetKey(KeyCode.Space) && detectarSuelo==true)
+        {
+            rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
+        }
+       
+    }
+
+     private bool DetectarSuelo(bool detectarSuelo)
+
+    {
+
+        // bool Physics.Raycast(Vector3 origin (transform.position), Vector3 direction(dirección del rayo), float maxDistance(longitud del rayo))
+
+
+
+        detectarSuelo= Physics.Raycast(transform.position, Vector3.down, maxDistance);
+        return detectarSuelo;
+
+
+
+    }
+
 }
 
