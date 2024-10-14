@@ -22,7 +22,7 @@ public class Personaje : MonoBehaviour
     private Vector3 inicio;
     private int vida =3 ;
     private bool detectarSuelo = false;
-    private float maxDistance = 0.5f;
+    private float maxDistance = 0.2f;
     
   
 
@@ -139,7 +139,7 @@ public class Personaje : MonoBehaviour
     }
     void Salto()
     {
-        if(Input.GetKey(KeyCode.Space) && detectarSuelo==true)
+        if(Input.GetKey(KeyCode.Space) && detectarSuelo)
         {
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
         }
@@ -155,11 +155,17 @@ public class Personaje : MonoBehaviour
 
 
         detectarSuelo= Physics.Raycast(transform.position, Vector3.down, maxDistance);
+        Debug.DrawRay(transform.position, Vector3.down, Color.red, 1f);  //para dibujar por ejemplo el raycast//Si lo pones bajo el return no se dibuja
         return detectarSuelo;
 
 
+        
 
     }
+   
+
+
+
 
 }
 
