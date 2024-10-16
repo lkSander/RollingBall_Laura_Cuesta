@@ -2183,7 +2183,7 @@ MonoBehaviour:
   velocity: 700
   score: {fileID: 2014031651}
   life: {fileID: 1821223945}
-  fuerzaSalto: 1
+  fuerzaSalto: 1.2
 --- !u!65 &1488887308
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2254,7 +2254,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Time: 5
-  m_PreviewTimeScale: 0.1
+  m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

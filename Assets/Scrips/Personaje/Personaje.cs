@@ -111,10 +111,12 @@ public class Personaje : MonoBehaviour
             score.SetText("Score: " + puntuacion);
 
         }
-        if(other.CompareTag("Enemigo"))
+        if(other.CompareTag("Enemigo")|| other.CompareTag("Rolling"))
         {
             vida -= 1;
             life.SetText("<3: " + vida);
+            animator.SetBool("golpe", true);
+
 
         }
         if (other.CompareTag("Vacio"))
@@ -133,13 +135,20 @@ public class Personaje : MonoBehaviour
         //{
         //    animator.SetBool("movimiento", false);
         //}
+       
         if (v > 0 || v < 0)
         {
             animator.SetBool("movimiento", true);
+
+            
         }
         if (v == 0)
         {
             animator.SetBool("movimiento", false);
+
+
+
+
         }
     }
     void Salto()
@@ -147,7 +156,10 @@ public class Personaje : MonoBehaviour
         if(Input.GetKey(KeyCode.Space) && detectarSuelo)
         {
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
+            
+
         }
+        //animator.SetBool("salto", false);
        
     }
 
