@@ -23,6 +23,7 @@ public class Personaje : MonoBehaviour
     private int vida =3 ;
     private bool detectarSuelo = false;
     private float maxDistance = 0.2f;
+    private bool vuelta = false;
     
   
 
@@ -65,11 +66,13 @@ public class Personaje : MonoBehaviour
         ////float z = 0;
         ////float x = 0;
 
-        //if (Input.GetKey(KeyCode.W))
-        //{
-        //    //z++;
-        //    transform.position += new Vector3(0, 0, 1).normalized * velocity * Time.deltaTime;
-        //}
+        if (Input.GetKey(KeyCode.W)&& vuelta==true )
+        {
+            vuelta = false;
+            transform.eulerAngles += new Vector3(0, 180, 0);
+            //    //z++;
+            //    transform.position += new Vector3(0, 0, 1).normalized * velocity * Time.deltaTime;
+        }
         //if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         //{
 
@@ -77,11 +80,13 @@ public class Personaje : MonoBehaviour
 
         //}
         ////    x--;
-        //if (Input.GetKey(KeyCode.S))
-        //{
+        if (Input.GetKey(KeyCode.S)&& vuelta==false)
+        {
+            transform.eulerAngles += new Vector3(0, 180, 0);
+            vuelta = true;
         //    transform.position += new Vector3(0, 0, -1).normalized * velocity * Time.deltaTime;
         //    //    z--;
-        //}
+        }
         //if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
         //{
         //    transform.position += new Vector3(1, 0, 1).normalized * velocity * Time.deltaTime;
