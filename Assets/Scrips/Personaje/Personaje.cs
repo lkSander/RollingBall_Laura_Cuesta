@@ -23,7 +23,11 @@ public class Personaje : MonoBehaviour
     private int vida =3 ;
     private bool detectarSuelo = false;
     private float maxDistance = 0.2f;
+
     private bool vuelta = false;
+    private bool salto = false;
+
+    [SerializeField] private Vector3 saltar ;
     
   
 
@@ -73,13 +77,22 @@ public class Personaje : MonoBehaviour
             //    //z++;
             //    transform.position += new Vector3(0, 0, 1).normalized * velocity * Time.deltaTime;
         }
-        //if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        //{
 
-        //    transform.position += new Vector3(-1, 0, 1).normalized * velocity * Time.deltaTime;
+      
+        //if (Input.GetKey(KeyCode.A))
+        //{
+            
+        //    transform.eulerAngles += new Vector3(0, -90, 0);
+
+        //} 
+        //if (Input.GetKey(KeyCode.D))
+        //{
+            
+
+        //    transform.eulerAngles += new Vector3(0, 90, 0);
 
         //}
-        ////    x--;
+           
         if (Input.GetKey(KeyCode.S)&& vuelta==false)
         {
             transform.eulerAngles += new Vector3(0, 180, 0);
@@ -153,7 +166,7 @@ public class Personaje : MonoBehaviour
     }
     void Salto()
     {
-        if(Input.GetKey(KeyCode.Space) && detectarSuelo)
+        if(Input.GetKeyDown(KeyCode.Space) && detectarSuelo)
         {
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
             
