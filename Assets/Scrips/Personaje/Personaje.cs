@@ -139,12 +139,12 @@ public class Personaje : MonoBehaviour
             transform.position = inicio;
         }
 
-        if (other.CompareTag("Suelo"))
-        {
+        //if (other.CompareTag("Suelo"))
+        //{
 
-            saltoSuelo = true;
+        //    saltoSuelo = true;
             
-        }
+        //}
         
     }
     void Animaciones()
