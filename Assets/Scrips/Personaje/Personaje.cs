@@ -26,6 +26,7 @@ public class Personaje : MonoBehaviour
 
     private bool vuelta = false;
     private bool salto = false;
+    private bool saltoSuelo = false;
 
     [SerializeField] private Vector3 saltar ;
     
@@ -78,21 +79,22 @@ public class Personaje : MonoBehaviour
             //    transform.position += new Vector3(0, 0, 1).normalized * velocity * Time.deltaTime;
         }
 
-      
+
         //if (Input.GetKey(KeyCode.A))
         //{
-            
+          
         //    transform.eulerAngles += new Vector3(0, -90, 0);
-
-        //} 
-        //if (Input.GetKey(KeyCode.D))
-        //{
             
-
-        //    transform.eulerAngles += new Vector3(0, 90, 0);
 
         //}
-           
+        //if (Input.GetKey(KeyCode.D))
+        //{
+
+
+        //    transform.eulerAngles += new Vector3(0, 90, 0);
+            
+        //}
+
         if (Input.GetKey(KeyCode.S)&& vuelta==false)
         {
             transform.eulerAngles += new Vector3(0, 180, 0);
@@ -136,6 +138,13 @@ public class Personaje : MonoBehaviour
         {
             transform.position = inicio;
         }
+
+        if (other.CompareTag("Suelo"))
+        {
+
+            saltoSuelo = true;
+            
+        }
         
     }
     void Animaciones()
@@ -166,7 +175,7 @@ public class Personaje : MonoBehaviour
     }
     void Salto()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && detectarSuelo)
+        if(Input.GetKeyDown(KeyCode.Space) && (detectarSuelo || saltoSuelo == true))
         {
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
             

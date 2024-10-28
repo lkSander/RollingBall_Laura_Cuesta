@@ -10,7 +10,7 @@ public class ParedCubos : MonoBehaviour
    [SerializeField] private Rigidbody[] rbs;
     void Start()
     {
-        
+        inicioTimer = false;
     }
 
     // Update is called once per frame
