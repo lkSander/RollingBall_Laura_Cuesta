@@ -20,7 +20,7 @@ public class Personaje : MonoBehaviour
    private  float h, v, y;
     private int puntuacion = 0;
     private Vector3 inicio;
-    private int vida =3 ;
+    private int vida =4 ;
     private bool detectarSuelo = false;
     private float maxDistance = 0.2f;
 
@@ -129,6 +129,11 @@ public class Personaje : MonoBehaviour
         if(other.CompareTag("Enemigo")|| other.CompareTag("Rolling"))
         {
             vida -= 1;
+            if (vida < 0)
+            {
+                vida = 0;
+            }
+
             life.SetText("<3: " + vida);
             animator.SetBool("golpe", true);
 
@@ -137,6 +142,7 @@ public class Personaje : MonoBehaviour
         if (other.CompareTag("Vacio"))
         {
             transform.position = inicio;
+            vida -= 1;
         }
 
         //if (other.CompareTag("Suelo"))
