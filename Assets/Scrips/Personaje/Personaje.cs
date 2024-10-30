@@ -56,11 +56,12 @@ public class Personaje : MonoBehaviour
         //detectarSuelo=DetectarSuelo(detectarSuelo);
         Salto();
       
-        collSuelo= CollSuelo();
+        //collSuelo= CollSuelo();
     }
     private void FixedUpdate()
     {
-        rb.AddForce(new Vector3(h, 0, v) * velocity, ForceMode.Force);
+        Vector3 dirMovimiento = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * new Vector3(h, 0, v);
+        rb.AddForce(dirMovimiento * velocity, ForceMode.Force);
     }
 
     void Movimiento()
@@ -186,7 +187,7 @@ public class Personaje : MonoBehaviour
     }
     void Salto()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && collSuelo== true)
+        if(Input.GetKeyDown(KeyCode.Space) && detectarSuelo==true)
         {
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
             
@@ -196,31 +197,31 @@ public class Personaje : MonoBehaviour
        
     }
 
-     //private bool DetectarSuelo(bool detectarSuelo)
-     //{
-
-     //   // bool Physics.Raycast(Vector3 origin (transform.position), Vector3 direction(dirección del rayo), float maxDistance(longitud del rayo))
-
-
-
-     //   detectarSuelo= Physics.Raycast(transform.position, Vector3.down, maxDistance);
-     //   Debug.DrawRay(transform.position, Vector3.down, Color.red, 1f);  //para dibujar por ejemplo el raycast//Si lo pones bajo el return no se dibuja
-     //   return detectarSuelo;
-
-
-        
-
-     //}
-
-    bool CollSuelo()
+    private bool DetectarSuelo(bool detectarSuelo)
     {
 
+        // bool Physics.Raycast(Vector3 origin (transform.position), Vector3 direction(dirección del rayo), float maxDistance(longitud del rayo))
 
 
-        bool result = Physics.CheckSphere(posicionInicial.position, radioCirc, suelo);
-        return result;  
-            
+
+        detectarSuelo = Physics.Raycast(transform.position, Vector3.down, maxDistance);
+        Debug.DrawRay(transform.position, Vector3.down, Color.red, 1f);  //para dibujar por ejemplo el raycast//Si lo pones bajo el return no se dibuja
+        return detectarSuelo;
+
+
+
+
     }
+
+    //bool CollSuelo()
+    //{
+
+
+
+    //    bool result = Physics.CheckSphere(posicionInicial.position, radioCirc, suelo);
+    //    return result;  
+            
+    //}
    
 
 
