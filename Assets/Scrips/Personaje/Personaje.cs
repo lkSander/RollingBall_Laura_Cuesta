@@ -29,12 +29,17 @@ public class Personaje : MonoBehaviour
     private bool saltoSuelo = false;
 
     [SerializeField] private Vector3 saltar ;
-    
-  
+
+   [SerializeField] Transform posicionInicial;
+   [SerializeField] float radioCirc;
+   [SerializeField] LayerMask suelo;
+    bool collSuelo;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        posicionInicial=GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         inicio= transform.position;
@@ -48,10 +53,10 @@ public class Personaje : MonoBehaviour
     {
         Movimiento();
         Animaciones();
-        detectarSuelo=DetectarSuelo(detectarSuelo);
+        //detectarSuelo=DetectarSuelo(detectarSuelo);
         Salto();
       
-
+        collSuelo= CollSuelo();
     }
     private void FixedUpdate()
     {
@@ -181,7 +186,7 @@ public class Personaje : MonoBehaviour
     }
     void Salto()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && (detectarSuelo || saltoSuelo == true))
+        if(Input.GetKeyDown(KeyCode.Space) && collSuelo== true)
         {
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
             
@@ -191,21 +196,30 @@ public class Personaje : MonoBehaviour
        
     }
 
-     private bool DetectarSuelo(bool detectarSuelo)
+     //private bool DetectarSuelo(bool detectarSuelo)
+     //{
 
-    {
-
-        // bool Physics.Raycast(Vector3 origin (transform.position), Vector3 direction(dirección del rayo), float maxDistance(longitud del rayo))
-
+     //   // bool Physics.Raycast(Vector3 origin (transform.position), Vector3 direction(dirección del rayo), float maxDistance(longitud del rayo))
 
 
-        detectarSuelo= Physics.Raycast(transform.position, Vector3.down, maxDistance);
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, 1f);  //para dibujar por ejemplo el raycast//Si lo pones bajo el return no se dibuja
-        return detectarSuelo;
+
+     //   detectarSuelo= Physics.Raycast(transform.position, Vector3.down, maxDistance);
+     //   Debug.DrawRay(transform.position, Vector3.down, Color.red, 1f);  //para dibujar por ejemplo el raycast//Si lo pones bajo el return no se dibuja
+     //   return detectarSuelo;
 
 
         
 
+     //}
+
+    bool CollSuelo()
+    {
+
+
+
+        bool result = Physics.CheckSphere(posicionInicial.position, radioCirc, suelo);
+        return result;  
+            
     }
    
 
