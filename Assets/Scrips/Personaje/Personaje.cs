@@ -7,132 +7,112 @@ using UnityEngine.Video;
 
 public class Personaje : MonoBehaviour
 {
+    [SerializeField] private float velocidadMovimiento;
+    private float h;
+    private float v;
+    CharacterController controller;
+    private Vector3 movimiento;
+    [SerializeField] float smoothTime;
+    [SerializeField] float velocidadRotacion;
+    float anguloSuave;
 
-    [SerializeField] public float velocity;
-    Rigidbody rb;
-    Animator animator;
-   [SerializeField] TMP_Text score;
-    [SerializeField] TMP_Text life;
-
-    [SerializeField] float fuerzaSalto;
-
-
-   private  float h, v, y;
     private int puntuacion = 0;
     private Vector3 inicio;
-    private int vida =4 ;
-    private bool detectarSuelo = false;
-    private float maxDistance = 0.2f;
+    private int vida = 4;
 
-    private bool vuelta = false;
-    private bool salto = false;
-    private bool saltoSuelo = false;
 
-    [SerializeField] private Vector3 saltar ;
+    [SerializeField] TMP_Text score;
+    [SerializeField] TMP_Text life;
+    Animator animator;
 
-   [SerializeField] Transform posicionInicial;
-   [SerializeField] float radioCirc;
-   [SerializeField] LayerMask suelo;
-    bool collSuelo;
+
+
+    [Header("Detección de Suelo")]
+    [SerializeField] private float radioDeteccion;
+    [SerializeField] private Transform pies;
+    [SerializeField] private LayerMask queEsSuelo;
+
+    [SerializeField] private Vector3 movVertical;
+    [SerializeField] private float factorGravedad;
+    [SerializeField] private float alturaSalto;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        posicionInicial=GetComponent<Transform>();
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        inicio= transform.position;
-        life.SetText("<3: " + vida);
-        score.SetText("Score: " + puntuacion);
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movimiento();
+        AplicarGravedad();
+        MoverRotar();
+        EnSuelo();
+        Saltar();
         Animaciones();
-        //detectarSuelo=DetectarSuelo(detectarSuelo);
-        Salto();
-      
-        //collSuelo= CollSuelo();
+        life.SetText("<3: " + vida);
+        score.SetText("Score: " + puntuacion);
     }
-    private void FixedUpdate()
+    private void MoverRotar()
     {
-        Vector3 dirMovimiento = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * new Vector3(h, 0, v);
-        rb.AddForce(dirMovimiento * velocity, ForceMode.Force);
-    }
-
-    void Movimiento()
-
-    {
-       // rb.AddForce(direccionF * fuerza, ForceMode.TipoF);
-        h= Input.GetAxisRaw("Horizontal");
-       v = Input.GetAxisRaw("Vertical");
-
-        
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
+        movimiento = new Vector2(h, v).normalized;
 
 
-        ////float z = 0;
-        ////float x = 0;
 
-        if (Input.GetKey(KeyCode.W)&& vuelta==true )
+        // float anguloRotacion= Mathf.Atan2(movimiento.x, movimiento.z)*  Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y; //rotar el objeto para que siga los ejes de la cámara. Se usa trigonometría
+
+        if (movimiento.magnitude > 0)
         {
-            vuelta = false;
-            transform.eulerAngles += new Vector3(0, 180, 0);
-            //    //z++;
-            //    transform.position += new Vector3(0, 0, 1).normalized * velocity * Time.deltaTime;
+            //Calculo el águlo al que ponerse en funcionamiento
+
+            float anguloRotacion = Mathf.Atan2(movimiento.x, movimiento.y) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+
+            anguloSuave = Mathf.SmoothDampAngle(transform.eulerAngles.y, anguloRotacion, ref velocidadRotacion, smoothTime);
+
+            transform.eulerAngles = new Vector3(0, anguloRotacion, 0);
+
+            Vector3 mov = Quaternion.Euler(0, anguloSuave, 0) * Vector3.forward;
+
+            controller.Move(mov * velocidadMovimiento * Time.deltaTime); //No va por físicas así que se usa con tiempo
+
+
         }
 
-
-        //if (Input.GetKey(KeyCode.A))
-        //{
-          
-        //    transform.eulerAngles += new Vector3(0, -90, 0);
-            
-
-        //}
-        //if (Input.GetKey(KeyCode.D))
-        //{
-
-
-        //    transform.eulerAngles += new Vector3(0, 90, 0);
-            
-        //}
-
-        if (Input.GetKey(KeyCode.S)&& vuelta==false)
+    }
+    private void AplicarGravedad()
+    {
+        movVertical.y += factorGravedad * Time.deltaTime;
+        controller.Move(movVertical * Time.deltaTime);
+    }
+    private void Saltar()
+    {
+        //saltar la cantidad que quieras
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.eulerAngles += new Vector3(0, 180, 0);
-            vuelta = true;
-        //    transform.position += new Vector3(0, 0, -1).normalized * velocity * Time.deltaTime;
-        //    //    z--;
+            movVertical.y = Mathf.Sqrt(-2 * factorGravedad * alturaSalto);
         }
-        //if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
-        //{
-        //    transform.position += new Vector3(1, 0, 1).normalized * velocity * Time.deltaTime;
-        //    //    x++;
-        //}
-        ////rb.velocity = new Vector3(x * velocity, 0, z * velocity);
-
-        ////if (Input.GetKey(KeyCode.D))
-        ////{
-        ////    transform.eulerAngles = new Vector3(0, 90, 0);
-        ////}
-
-
-
+    }
+    private bool EnSuelo()
+    {
+        //Tirar una esfera de detección en los piescon cierto radio
+        bool resultado = Physics.CheckSphere(pies.position, radioDeteccion, queEsSuelo);
+        return resultado;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Coleccionable"))
+        if (other.CompareTag("Coleccionable"))
         {
             Destroy(other.gameObject);
-            puntuacion +=10;
-            score.SetText("Score: " + puntuacion);
+            puntuacion += 1;
+            
 
         }
-        if(other.CompareTag("Enemigo")|| other.CompareTag("Rolling"))
+        if (other.CompareTag("Enemigo") || other.CompareTag("Rolling"))
         {
             vida -= 1;
             if (vida < 0)
@@ -140,8 +120,8 @@ public class Personaje : MonoBehaviour
                 vida = 0;
             }
 
-            life.SetText("<3: " + vida);
-            animator.SetBool("golpe", true);
+            
+            //animator.SetBool("golpe", true);
 
 
         }
@@ -155,9 +135,9 @@ public class Personaje : MonoBehaviour
         //{
 
         //    saltoSuelo = true;
-            
+
         //}
-        
+
     }
     void Animaciones()
     {
@@ -169,63 +149,16 @@ public class Personaje : MonoBehaviour
         //{
         //    animator.SetBool("movimiento", false);
         //}
-       
-        if (v > 0 || v < 0)
+
+        if (movimiento.magnitude > 0)
         {
-            animator.SetBool("movimiento", true);
-
             
+                animator.SetBool("movimiento", true);
+
+
+          
         }
-        if (v == 0)
-        {
-            animator.SetBool("movimiento", false);
 
-
-
-
-        }
+           
     }
-    void Salto()
-    {
-        if(Input.GetKeyDown(KeyCode.Space) && detectarSuelo==true)
-        {
-            rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
-            
-
-        }
-        //animator.SetBool("salto", false);
-       
-    }
-
-    private bool DetectarSuelo(bool detectarSuelo)
-    {
-
-        // bool Physics.Raycast(Vector3 origin (transform.position), Vector3 direction(dirección del rayo), float maxDistance(longitud del rayo))
-
-
-
-        detectarSuelo = Physics.Raycast(transform.position, Vector3.down, maxDistance);
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, 1f);  //para dibujar por ejemplo el raycast//Si lo pones bajo el return no se dibuja
-        return detectarSuelo;
-
-
-
-
-    }
-
-    //bool CollSuelo()
-    //{
-
-
-
-    //    bool result = Physics.CheckSphere(posicionInicial.position, radioCirc, suelo);
-    //    return result;  
-            
-    //}
-   
-
-
-
-
 }
-
