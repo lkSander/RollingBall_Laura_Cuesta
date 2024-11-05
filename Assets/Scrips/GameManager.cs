@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,5 +20,14 @@ public class GameManager : MonoBehaviour
     private void Settings()
     {
         
+    }
+    private void Play()
+    {
+      
+        
+    }
+    private void Quit()
+    {
+        SceneManager.LoadScene(0);
     }
 }
