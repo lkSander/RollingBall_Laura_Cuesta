@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 51310f9e25119b843816899e7cc3a5b1
+guid: f47a2bc0375704b4a8f189a0a18f3156
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Super Shiny
+  - Yang Laen
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -25,6 +25,7 @@ public class MenuUi : MonoBehaviour
     
    public void FinalizarPartida()
     {
+
         Application.Quit();
     }
 }
