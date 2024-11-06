@@ -161,4 +161,20 @@ public class Personaje : MonoBehaviour
 
            
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.CompareTag("sdfs"))
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<CharacterController>().enabled = false;
+
+
+            GetComponent<Collider>().enabled = true;
+
+
+
+
+        }
+    }
 }
