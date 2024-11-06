@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] Canvas canvaSettings;
+    [SerializeField] GameObject canvaSettings;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +19,12 @@ public class GameManager : MonoBehaviour
     }
     private void Settings()
     {
-        
+        canvaSettings.SetActive(!canvaSettings.activeSelf);
+         //timeScale = 0;
     }
     private void Play()
     {
-      
+        canvaSettings.SetActive(false);
         
     }
     private void Quit()
