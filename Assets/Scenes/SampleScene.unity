@@ -8530,6 +8530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1662952311}
   - component: {fileID: 1662952312}
+  - component: {fileID: 1662952313}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -8562,6 +8563,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4dd3acb02b591c4eb1d473025c9bd94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvaSettings: {fileID: 1197673780}
+--- !u!114 &1662952313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662952310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffba96e812bfab54b8cba2e0f411f7ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvaSettings: {fileID: 1197673780}

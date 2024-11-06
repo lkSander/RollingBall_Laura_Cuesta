@@ -17,18 +17,18 @@ public class GameManager : MonoBehaviour
     {
         
     }
-    private void Settings()
+    void Settings()
     {
         canvaSettings.SetActive(!canvaSettings.activeSelf);
          Time.timeScale = 0;
     }
-    private void Play()
+     void Play()
     {
         canvaSettings.SetActive(false);
         Time.timeScale = 1;
         
     }
-    private void Quit()
+    void Quit()
     {
         SceneManager.LoadScene(0);
     }
