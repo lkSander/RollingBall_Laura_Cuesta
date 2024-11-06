@@ -20,11 +20,12 @@ public class GameManager : MonoBehaviour
     private void Settings()
     {
         canvaSettings.SetActive(!canvaSettings.activeSelf);
-         //timeScale = 0;
+         Time.timeScale = 0;
     }
     private void Play()
     {
         canvaSettings.SetActive(false);
+        Time.timeScale = 1;
         
     }
     private void Quit()
