@@ -36,6 +36,10 @@ public class Personaje : MonoBehaviour
     [SerializeField] private float factorGravedad;
     [SerializeField] private float alturaSalto;
 
+    PersonajesCollider PersonajesCollider;
+
+    public int Vida { get => vida; set => vida = value; }
+
 
 
     // Start is called before the first frame update
@@ -103,42 +107,43 @@ public class Personaje : MonoBehaviour
         bool resultado = Physics.CheckSphere(pies.position, radioDeteccion, queEsSuelo);
         return resultado;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Coleccionable"))
-        {
-            Destroy(other.gameObject);
-            puntuacion += 1;
+   
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Coleccionable"))
+    //    {
+    //        Destroy(other.gameObject);
+    //        puntuacion += 1;
             
 
-        }
-        if (other.CompareTag("Enemigo") || other.CompareTag("Rolling"))
-        {
-            vida -= 1;
-            if (vida < 0)
-            {
-                vida = 0;
-            }
+    //    }
+    //    if (other.CompareTag("Enemigo") || other.CompareTag("Rolling"))
+    //    {
+    //        vida -= 1;
+    //        if (vida < 0)
+    //        {
+    //            vida = 0;
+    //        }
 
             
-            //animator.SetBool("golpe", true);
+    //        //animator.SetBool("golpe", true);
 
 
-        }
-        if (other.CompareTag("Vacio"))
-        {
-            transform.position = inicio;
-            vida -= 1;
-        }
+    //    }
+    //    if (other.CompareTag("Vacio"))
+    //    {
+    //        transform.position = inicio;
+    //        vida -= 1;
+    //    }
 
-        //if (other.CompareTag("Suelo"))
-        //{
+    //    //if (other.CompareTag("Suelo"))
+    //    //{
 
-        //    saltoSuelo = true;
+    //    //    saltoSuelo = true;
 
-        //}
+    //    //}
 
-    }
+    
     void Animaciones()
     {
         //if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.A)|| Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D) )
@@ -162,19 +167,19 @@ public class Personaje : MonoBehaviour
            
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(hit.gameObject.CompareTag("sdfs"))
-        {
-            GetComponent<Rigidbody>().isKinematic = false;
-            GetComponent<CharacterController>().enabled = false;
+//    private void OnControllerColliderHit(ControllerColliderHit hit)
+//    {
+//        if(hit.gameObject.CompareTag("sdfs"))
+//        {
+//            GetComponent<Rigidbody>().isKinematic = false;
+//            GetComponent<CharacterController>().enabled = false;
 
 
-            GetComponent<Collider>().enabled = true;
+//            GetComponent<Collider>().enabled = true;
 
 
 
 
-        }
-    }
+//        }
+//    }
 }
