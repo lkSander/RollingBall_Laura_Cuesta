@@ -14,45 +14,39 @@ public class CanvasManager : MonoBehaviour
 
     private void Start()
     {
-        play.gameObject.SetActive(false);
-        close.gameObject.SetActive(false);
+
+        canvaSettings.SetActive(false);
+        Time.timeScale = 1;
     }
     private void Update()
     {
-        Settings();
+        
     }
-    void Settings()
+    public void Settings()
     {
         
-        if (Input.GetKeyDown(KeyCode.Escape) && canvaSettings.activeSelf)
+        if (canvaSettings.activeSelf)
         {
-
             Time.timeScale = 1;
-            play.gameObject.SetActive(false);
-            close.gameObject.SetActive(false);
+            canvaSettings.SetActive(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !canvaSettings.activeSelf)
+        if (!canvaSettings.activeSelf)
         {
-
+            canvaSettings.SetActive(true);
             Time.timeScale = 0;
-            play.gameObject.SetActive(true);
-            close.gameObject.SetActive(true);
         }
 
     }
 
-    void Play()
-  {
-    canvaSettings.SetActive(false);
-    Time.timeScale = 1;
-    play.gameObject.SetActive(false);
-    close.gameObject.SetActive(false);
+    public void Play()
+    {
+        canvaSettings.SetActive(false);
+        Time.timeScale = 1;
+    }
 
-  }
-
-   void Quit()
-   {
-    SceneManager.LoadScene(0);
-   }
+    public void Quit()
+    {
+     SceneManager.LoadScene(0);
+    }
 }

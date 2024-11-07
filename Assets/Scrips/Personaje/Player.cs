@@ -8,17 +8,21 @@ public class Player : MonoBehaviour
     [SerializeField] private float velocidadMovimiento;
     [SerializeField] private float alturaSalto;
     [SerializeField] private float rayoSuelo;
+    [SerializeField] private BoxCollider paredAtravesable;
     private float h;
     private float v;
     private int puntuacion;
     private Vector3 inicio;
     private int vida;
 
+
     Rigidbody rb;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        inicio = transform.position;
     }
 
 
@@ -49,6 +53,25 @@ public class Player : MonoBehaviour
     {
         bool suelo = Physics.Raycast(gameObject.transform.position, Vector3.down, rayoSuelo);
         return suelo;
+    }
+
+    void AtravesarPared()
+    {
+        paredAtravesable.isTrigger = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coleccionable")) 
+        {
+            puntuacion += 1;
+            Destroy(other.gameObject);
+        
+        }
+        if (other.CompareTag("Vacio"))
+        {
+            transform.position = inicio;
+        }
     }
 
 }
