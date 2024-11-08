@@ -9,6 +9,7 @@ TagManager:
   - Vacio
   - Suelo
   - Rolling
+  - Pared
   layers:
   - Default
   - TransparentFX

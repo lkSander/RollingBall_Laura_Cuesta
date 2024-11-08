@@ -7,6 +7,8 @@ public class Coleccionable : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] Vector3 rotar;
     [SerializeField] float velocity;
+    [SerializeField] AudioClip sonidoRecoger;
+    [SerializeField] AudioManager audioSourceSfx;
     void Start()
     {
         
@@ -18,6 +20,14 @@ public class Coleccionable : MonoBehaviour
         transform.Rotate(rotar * velocity * Time.deltaTime);
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            audioSourceSfx.ReproducirSonido(sonidoRecoger);
+        }
+
+    }
+
 }
 
