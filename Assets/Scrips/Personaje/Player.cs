@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject cam2;
     [SerializeField] TMP_Text score;
     [SerializeField] TMP_Text life;
+    [SerializeField] TMP_Text noMuro;
     private float h;
     private float v;
     [SerializeField] private int puntuacion;
@@ -28,8 +29,9 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         inicio = transform.position;
-
         
+       
+        vida = 4;
 
         cam1.SetActive(true);
         cam2.SetActive(false);
@@ -49,8 +51,13 @@ public class Player : MonoBehaviour
 
         if (puntuacion >= 5)
         {
-            AtravesarPared();
+            AtravesarPared(true);
         }
+        else
+        {
+            AtravesarPared(false);
+        }
+        
     }
 
     private void FixedUpdate()
@@ -72,12 +79,13 @@ public class Player : MonoBehaviour
         return suelo;
     }
 
-    void AtravesarPared()
+    public bool AtravesarPared(bool atravesable)
     {
-        paredAtravesable.isTrigger = true;
+        paredAtravesable.isTrigger = atravesable;
+        return atravesable;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Coleccionable")) 
         {
@@ -91,6 +99,11 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("Pared"))
         {
+            if(puntuacion<5)
+            {
+                noMuro.SetText("No tienes suficientes esferas para pasar, se requieren 5");
+            }
+          
             cam1.SetActive(false);
             cam2.SetActive(true);
         }
