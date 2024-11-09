@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] GameObject canvaParedNo;
     [SerializeField] private float velocidadMovimiento;
     [SerializeField] private float alturaSalto;
     [SerializeField] private float rayoSuelo;
@@ -52,7 +53,9 @@ public class Player : MonoBehaviour
         cam1.SetActive(true);
         cam2.SetActive(false);
 
-        objetivo.SetActive(false);
+
+        canvaParedNo.SetActive(false);
+       
 
         if(timer>= 2f)
         {
@@ -92,14 +95,14 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
        
-        rb.AddForce (new Vector3(h, 0, v).normalized * velocidadMovimiento, ForceMode.Acceleration);
+        rb.AddForce (new Vector3(h, 0, v).normalized * velocidadMovimiento, ForceMode.Force);
        
     }
     void Salto()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKey(KeyCode.Space)) 
         {
-            rb.AddForce (new Vector3(0,1,0) * alturaSalto, ForceMode.VelocityChange);
+            rb.AddForce (new Vector3(0,1,0) * alturaSalto, ForceMode.Impulse);
         }
     }
     bool DetectarSuelo()
@@ -126,24 +129,10 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("Vacio"))
         {
-            transform.position = checkpoint;
+            transform.position = inicio;
         }
-        if (other.CompareTag("Pared"))
-        {
-           
-            if(puntuacion<5)
-            {
-                noMuroCanvas.SetActive(true);
-                noMuro.SetText("No tienes 5 esferas");
-            }
-          
-            cam1.SetActive(false);
-            cam2.SetActive(true);
-        }
-        if(other.CompareTag("Enemigo"))
-        {
-            vida -= 1;
-        }
+       
+       
         if(CompareTag("Checkpoint"))
         {
             checkpoint= transform.position;
@@ -162,14 +151,25 @@ public class Player : MonoBehaviour
         }
     }
 
-  
 
-    private void OnTriggerExit(Collider other)
+
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Pared"))
+        if (collision.gameObject.tag.Equals("Enemigo"))
         {
-            cam1.SetActive(true);
-            cam2.SetActive(false);
+            vida -= 1;
+        }
+        
+        if(collision.gameObject.tag.Equals("Pared"))
+        {
+            canvaParedNo.SetActive(true);
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collision.gameObject.tag.Equals("Pared"))
+        {
+            canvaParedNo.SetActive(false);
         }
     }
 
