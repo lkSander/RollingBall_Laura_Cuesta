@@ -16,6 +16,13 @@ public class End : MonoBehaviour
     {
         
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (CompareTag("Player"))
+        {
+            SceneManager.LoadScene(3);
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(CompareTag("Player"))

@@ -154,12 +154,12 @@ public class Player : MonoBehaviour
             vida += 1;
             Destroy(other.gameObject);
         }
-        //if(CompareTag("End"))
-        //{
+        if(CompareTag("End"))
+        {
 
-        //    SceneManager.LoadScene(3);
+            SceneManager.LoadScene(3);
 
-        //}
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
