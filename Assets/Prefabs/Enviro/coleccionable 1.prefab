@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotar: {x: 0, y: 90, z: 0}
   velocity: 2
+  sonidoRecoger: {fileID: 8300000, guid: 73ab929bf868a064ebd17c8b6f8d86fb, type: 3}
+  audioSourceSfx: {fileID: 0}
 --- !u!33 &5447373331417556399
 MeshFilter:
   m_ObjectHideFlags: 0

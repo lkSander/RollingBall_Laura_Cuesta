@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -19,15 +20,20 @@ public class Player : MonoBehaviour
     private float v;
     [SerializeField] private int puntuacion;
     private Vector3 inicio;
-   // private Vector3 checkpoint;
-    private int vida;
+   private Vector3 checkpoint;
+    private int vida= 4;
 
     private float timer;
 
     private int intentos = 3;
 
-    Checkpoint checkpoint;
 
+    [SerializeField] AudioClip sonidoRecoger;
+    [SerializeField] AudioManager audioSourceSfx;
+
+    [SerializeField] GameObject noMuroCanvas;
+
+    [SerializeField] GameObject objetivo;
 
     Rigidbody rb;
 
@@ -38,12 +44,24 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         inicio = transform.position;
         //checkpoint = inicio;
-        
+
+        noMuroCanvas.SetActive(false);
        
         vida = 4;
 
         cam1.SetActive(true);
         cam2.SetActive(false);
+
+        objetivo.SetActive(false);
+
+        if(timer>= 2f)
+        {
+            objetivo.SetActive(true) ;
+            if(timer>=5f)
+            {
+                objetivo.SetActive(false) ;
+            }
+        }
     }
 
 
@@ -66,6 +84,8 @@ public class Player : MonoBehaviour
         {
             AtravesarPared(false);
         }
+
+        VidaManager();
         
     }
 
@@ -99,24 +119,28 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Coleccionable")) 
         {
             puntuacion += 1;
+
             Destroy(other.gameObject);
-        
+            audioSourceSfx.ReproducirSonido(sonidoRecoger);
+
         }
         if (other.CompareTag("Vacio"))
         {
-            transform.position = Checkpoint.transform.position;
+            transform.position = checkpoint;
         }
         if (other.CompareTag("Pared"))
         {
+           
             if(puntuacion<5)
             {
-                noMuro.SetText("No tienes suficientes esferas para pasar, se requieren 5");
+                noMuroCanvas.SetActive(true);
+                noMuro.SetText("No tienes 5 esferas");
             }
           
             cam1.SetActive(false);
             cam2.SetActive(true);
         }
-        if(other.CompareTag("Enemy"))
+        if(other.CompareTag("Enemigo"))
         {
             vida -= 1;
         }
@@ -146,14 +170,9 @@ public class Player : MonoBehaviour
     {
         if(vida<=0)
         {
-            transform.position = inicio;
-            vida = 2;
-            intentos -= 1;
-        }
-        if(intentos<=0)
-        {
-            Time.timeScale = 0;
+            SceneManager.LoadScene(2);
 
         }
+       
     }
 }

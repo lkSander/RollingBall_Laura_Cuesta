@@ -12,6 +12,7 @@ TagManager:
   - Pared
   - Checkpoint
   - Vida
+  - End
   layers:
   - Default
   - TransparentFX
