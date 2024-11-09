@@ -19,7 +19,12 @@ public class Player : MonoBehaviour
     private float v;
     [SerializeField] private int puntuacion;
     private Vector3 inicio;
+    private Vector3 checkpoint;
     private int vida;
+
+    private float timer;
+
+    private int intentos = 3;
 
 
     Rigidbody rb;
@@ -27,8 +32,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        timer += Time.deltaTime;
         rb = GetComponent<Rigidbody>();
         inicio = transform.position;
+        checkpoint = inicio;
         
        
         vida = 4;
@@ -95,7 +102,7 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("Vacio"))
         {
-            transform.position = inicio;
+            transform.position = checkpoint;
         }
         if (other.CompareTag("Pared"))
         {
@@ -106,6 +113,14 @@ public class Player : MonoBehaviour
           
             cam1.SetActive(false);
             cam2.SetActive(true);
+        }
+        if(other.CompareTag("Enemy"))
+        {
+            vida -= 1;
+        }
+        if(CompareTag("Checkpoint"))
+        {
+            checkpoint= transform.position;
         }
 
     }
@@ -119,4 +134,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    void VidaManager()
+    {
+        if(vida<=0)
+        {
+            transform.position = inicio;
+            vida = 2;
+            intentos -= 1;
+        }
+        if(intentos<=0)
+        {
+            Time.timeScale = 0;
+
+        }
+    }
 }
