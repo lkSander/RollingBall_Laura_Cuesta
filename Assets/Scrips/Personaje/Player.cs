@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
         timer += Time.deltaTime;
         rb = GetComponent<Rigidbody>();
         inicio = transform.position;
+        checkpoint = transform.localPosition;
         //checkpoint = inicio;
 
         noMuroCanvas.SetActive(false);
@@ -129,21 +130,21 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("Vacio"))
         {
-            transform.position = inicio;
+            transform.position = checkpoint;
         }
        
        
-        if(CompareTag("Checkpoint"))
+        if(other.CompareTag("Checkpoint"))
         {
             checkpoint= transform.position;
         }
 
-        if (CompareTag("Vida"))
+        if (other.CompareTag("Vida"))
         {
             vida += 1;
             Destroy(other.gameObject);
         }
-        if(CompareTag("End"))
+        if(other.CompareTag("End"))
         {
 
             SceneManager.LoadScene(3);
