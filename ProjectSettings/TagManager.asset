@@ -10,6 +10,8 @@ TagManager:
   - Suelo
   - Rolling
   - Pared
+  - Checkpoint
+  - Vida
   layers:
   - Default
   - TransparentFX

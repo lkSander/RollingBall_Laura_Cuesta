@@ -19,12 +19,14 @@ public class Player : MonoBehaviour
     private float v;
     [SerializeField] private int puntuacion;
     private Vector3 inicio;
-    private Vector3 checkpoint;
+   // private Vector3 checkpoint;
     private int vida;
 
     private float timer;
 
     private int intentos = 3;
+
+    Checkpoint checkpoint;
 
 
     Rigidbody rb;
@@ -35,7 +37,7 @@ public class Player : MonoBehaviour
         timer += Time.deltaTime;
         rb = GetComponent<Rigidbody>();
         inicio = transform.position;
-        checkpoint = inicio;
+        //checkpoint = inicio;
         
        
         vida = 4;
@@ -102,7 +104,7 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("Vacio"))
         {
-            transform.position = checkpoint;
+            transform.position = Checkpoint.transform.position;
         }
         if (other.CompareTag("Pared"))
         {
@@ -121,6 +123,12 @@ public class Player : MonoBehaviour
         if(CompareTag("Checkpoint"))
         {
             checkpoint= transform.position;
+        }
+
+        if (CompareTag("Vida"))
+        {
+            vida += 1;
+            Destroy(other.gameObject);
         }
 
     }
